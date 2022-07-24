@@ -1,0 +1,56 @@
+{% extends 'root.html' %}
+{% load static %}
+
+{% block root %}
+
+{% include 'includes/navbar.html' %}
+<!-- about -->
+<div class="container mt-3">
+    <div class="row justify-content-lg-start">
+        <div class="col-lg-6 mb-5">
+            <p class="display-3 fw-bolder mb-2">{{ about.about_title}}</p>
+            <p class="h5 fw-normal ps-lg-5 pt-5">
+                {{ about.about_us }}
+            </p>
+        </div>
+    </div>
+    <hr width="40%">
+
+    <div class="row">
+        <div class="col-lg-6 mb-5 mb-lg-3">
+            <div class="display-4 mb-4">Contact Me</div>
+            <div class="pb-2">
+                <span><i class="bi bi-telephone-fill"></i></span>
+                <span class="ps-3">{{ about.contact_number}}</span>
+            </div>
+            <div>
+                <span><i class="bi bi-envelope-fill"></i></span>
+                <span class="ps-3">{{ about.contact_email }}</span>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+            <div class="display-4 mb-4">Follow Me</div>
+            <a href="{% if about.facebook_link != None %} {{ about.facebook_link }} {% else %} # {% endif %}" class="link-dark">
+                <div class="pb-2">
+                    <span><i class="bi bi-facebook"></i></span>
+                    <span class="ps-3">Facebook</span>
+                </div>
+            </a>
+            <a href="{% if about.twitter_link != None %} {{ about.twitter_link }} {% else %} # {% endif %}" class="link-dark">
+                <div class="pb-2">
+                    <span><i class="bi bi-twitter"></i></span>
+                    <span class="ps-3">Twitter</span>
+                </div>
+            </a>
+            <a href="{% if about.instagram_link != None %} {{ about.instagram_link }} {% else %} # {% endif %}" class="link-dark">
+                <div class="pb-2">
+                    <span><i class="bi bi-instagram"></i></span>
+                    <span class="ps-3">Instagram</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock root %}

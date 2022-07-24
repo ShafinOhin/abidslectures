@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- the biggapon -->
+<div class="container my-5">
+    <div class="card pt-2 pt-lg-4 shadow">
+        <div class="card-body">
+            <div class="row justify-content-evenly">
+                <div class="col-lg-6">
+                    <h1 class="mb-3">{{ course.catchy_intro }}</h1>
+                    <p class="mb-4">
+                        {{ course.catchy_description }}
+                    </p>
+                    <p class="fs-5">Instructor: <span class="fw-bold">{{ course.instructor_name }}</span></p>
+                </div>
+                <div class="col-lg-3 align-self-center">
+                    <div class="my-3 row justify-content-center">
+                        <a class="col-8 col-md-6 col-lg-10 btn btn-info btn-lg fw-bold text-center" href="#">Reviews</a>
+                    </div>
+                    <div class="my-3 row justify-content-center">
+                        <a class="col-8 col-md-6 col-lg-10 btn btn-success btn-lg fw-bold text-center" href="#">Enroll Now!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- course stats -->
+<div class="container my-5">
+    <div class="row justify-content-around">
+        <div class="col-lg-4 my-2">
+            <div class="rounded-3 p-3" style="background-color: #eeeeee;">
+                <div class="pt-1 fs-5">Students</div>
+                <h2 class="fw-bold">{{ course.enrolled_students }}+</h2>
+            </div>
+        </div>
+        <div class="col-lg-4 my-2">
+            <div class="rounded-3 p-3" style="background-color: #eeeeee;">
+                <div class="pt-1 fs-5">Number of Classes</div>
+                <h2 class="fw-bold">{{ course.number_of_classes }}</h2>
+            </div>
+        </div>
+        <div class="col-lg-4 my-2">
+            <div class="rounded-3 p-3" style="background-color: #eeeeee;">
+                <div class="pt-1 fs-5">Total Video Content</div>
+                <h2 class="fw-bold">{{ course.total_video_duration }}</h2>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- things will be covered -->
+<div class="container my-5">
+    <div class="row justify-content-between">
+        <div class="col-lg-4 mb-3">
+            <div>
+                <h1>What you will learn</h1>
+                <ul class="list-unstyled ps-4">
+                    {% for learning_point in course.learningpoint_set.all %}
+                    <li class=""><i class="bi bi-check-circle pe-2 fs-4" style="color: green;"></i><span class="h4">{{ learning_point.point }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-3">
+            <div>
+                <h1>What's included</h1>
+                <ul class="list-unstyled ps-4">
+                    {% for included_point in course.includedpoint_set.all %}
+                    <li class=""><i class="bi bi-forward-fill pe-2 fs-4" style="color:grey;"></i><span class="h4">{{ included_point.point }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container my-5">
+    <div class="row justify-content-around">
+        <div class="col-lg-5 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <div class="pe-2 align-self-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6.webp" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 40px;">
+                        </div>
+                        <div class="pe-4 align-self-center">
+                           <p class="fw-bold fs-3 mb-0">Student name 1</p>
+                        </div>
+                        <div class="align-self-center">
+                            <p class="fs-4 mb-0">says: </p>
+                        </div>
+                    </div>
+                    <div class="my-3 text-center h4 fw-bolder"><span class="fs-1">❝</span>Mentor Matter Most<span class="fs-1">❞</span></div>
+                    <div>
+                        <i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente harum eum obcaecati illum officia quo atque sed vel in culpa provident quidem magni quam quia soluta quis minima, ducimus error!</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <div class="pe-2 align-self-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 40px;">
+                        </div>
+                        <div class="pe-4 align-self-center">
+                           <p class="fw-bold fs-3 mb-0">Student name 2</p>
+                        </div>
+                        <div class="align-self-center">
+                            <p class="fs-4 mb-0">says: </p>
+                        </div>
+                    </div>
+                    <div class="my-3 text-center h4 fw-bolder"><span class="fs-1">❝</span>Mentor Matter Most<span class="fs-1">❞</span></div>
+                    <div>
+                        <i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente harum eum obcaecati illum officia quo atque sed vel in culpa provident quidem magni quam quia soluta quis minima, ducimus error!</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <div class="pe-2 align-self-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1.webp" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 40px;">
+                        </div>
+                        <div class="pe-4 align-self-center">
+                           <p class="fw-bold fs-3 mb-0">Student name 3</p>
+                        </div>
+                        <div class="align-self-center">
+                            <p class="fs-4 mb-0">says: </p>
+                        </div>
+                    </div>
+                    <div class="my-3 text-center h4 fw-bolder"><span class="fs-1">❝</span>Mentor Matter Most<span class="fs-1">❞</span></div>
+                    <div>
+                        <i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente harum eum obcaecati illum officia quo atque sed vel in culpa provident quidem magni quam quia soluta quis minima, ducimus error!</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div> -->
+
+{% endblock content %}

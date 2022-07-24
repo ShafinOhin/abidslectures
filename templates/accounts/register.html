@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if request.GET.status == 'verification' %}
+
+    <div class="container mx-auto alert alert-info" role="alert" style="max-width: 800px; margin-top:100px;">
+    Thank You for Registering<br>
+    A verification email is sent to <strong>({{ request.GET.email }})</strong> <br>
+    <br>
+    Already Verified? <a href="{% url 'login' %}">Login</a>
+    </div>
+
+{% else %}
+
+
+     <div class="mt-3 display-3 text-center mb-3 mb-lg-5">Login / Register</div>
+    <div class="container mt-3 mb-4">
+        <div class="row justify-content-around">
+            <!-- Login/Register -->
+            <div class="col-lg-6 col-md-8">
+                <div class="card mb-4 shadow">
+                    <div class="card-body">
+                        {% include 'includes/alerts.html' %}
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                              <button class="nav-link nav-css py-3 {% if login %} active {% endif %}" id="nav-login-tab" data-bs-toggle="tab" data-bs-target="#nav-login" type="button" role="tab" aria-controls="nav-login" aria-selected="true">Login</button>
+                              <button class="nav-link nav-css py-3 {% if not login %} active {% endif %}" id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab" aria-controls="nav-register" aria-selected="false">Register</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content p-4" id="nav-tabContent">
+                            <div class="tab-pane fade {% if login %} show active {% endif %}" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
+                                <form class="px-md-2 px-lg-5" action = "{% url 'login' %}" method = "POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                      <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                      <input type="email" class="form-control" id="exampleInputEmail1" name = "email">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                                      <input type="password" class="form-control" id="exampleInputPassword1" name = "password">
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                    <div class="text-start">
+                                        <a href="{% url 'forgotpassword' %}"> Don't remember? </a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade {% if not login %} show active {% endif %}" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+                                <form class="" action = "{% url 'register' %}" method = "POST">
+                                    <div style = "color: rgb(201, 23, 23);">
+                                        {{ form.email.errors }}
+                                        {{ form.non_field_errors  }}
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels">Name</label>{{ form.first_name }}</div>
+                                        <div class="col-md-6"><label class="labels">Surname</label>{{ form.last_name }}</div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-12 pt-2"><label class="labels">Mobile Number</label>{{ form.phone_number }}</div>
+                                        <div class="col-md-12 pt-2"><label class="labels">Education</label>{{ form.institute }}</div>
+                                        <div class="col-md-12 pt-2"><label class="labels">Email</label>{{ form.email }}</div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-12 pt-2"><label class="labels">Password</label>{{ form.password }}</div>
+                                        <div class="col-md-12 pt-2"><label class="labels">Confirm Password</label>{{ form.confirm_password }}</div>
+                                    </div>
+                                    <div class="mt-5 text-end"><button class="btn btn-success profile-button" type="submit">Register</button></div>
+                                    
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+{% endif %}
+{% endblock %} 

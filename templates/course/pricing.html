@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+    
+{% block content %}
+
+    <!-- membership title-->
+    <div class="display-1 text-center mt-3 mb-3 mb-lg-5 pt-3">Membership</div>
+    <div class="display-6 text-center mb-3 mb-lg-5 text-muted">Coming Soon</div> 
+
+    <hr width="50%" style="margin: auto;" >
+   <!-- pricings -->
+   <div class="display-1 text-center my-5 pt-2 pt-lg-5">Course Pricing</div>
+   <div class="container mt-3 mb-5 px-4">
+    {% for flag, course in courses.items %}
+       <div class="row p-3 mb-3 mb-lg-5 justify-content-around text-center text-lg-start shadow">
+           <div class="col-lg-2 align-self-center mb-3 {% if flag == True %} order-lg-1 {% endif %}">
+               <div><p class="display-2">{{ course.course_name }}</p></div>
+               <div><span class="display-6">৳ {{ course.course_price }}</span><span class="h5 fw-bold"></span></div>
+           </div>
+           
+           <div class="col-lg-6">
+               <p class="fs-5">{{ course.description }}</p>
+               <ul class="list-unstyled fs-3">
+                    <li>{{ course.course_feature_1 }}</li>
+                    <li>{{ course.course_feature_2 }}</li>
+                    <li>{{ course.course_feature_3 }}</li>
+               </ul>
+               <div class="pt-2"><a href="#" class="btn btn-lg btn-primary">Enroll Now</a></div>
+           </div>
+       </div>
+       {% endfor %}
+       
+   </div>
+
+
+{% endblock content %}
+
+    

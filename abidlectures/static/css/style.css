@@ -1,0 +1,154 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+.card{
+    border-radius: 0.5rem;
+}
+
+/* row {
+    border: 0px;
+    margin-right: 0;
+    margin-left: 0;
+    max-width: 100%;
+} */
+
+.navbar.navbar-expand-lg.navbar-light li a {
+    color: #551A8B;
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-weight: 600;
+}
+
+.navbar-light .navbar-brand {
+    color: #551A8B;
+
+}
+
+.enroll-base {
+    position: relative;
+}
+
+.enroll-overlay {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+
+
+.intro-text {
+    font-size: 1rem;
+}
+.latest-lectures{
+    
+    font-size: small;
+}
+
+@media only screen and (min-width: 370px) {
+    .intro-text {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (min-width: 490px) {
+    .intro-text {
+        font-size: 1.3rem;
+    }
+}
+
+@media only screen and (min-width: 450px) {
+    #enroll-button {
+        width: 58.33333333%;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .intro-text {
+        font-size: 1.5rem;
+    }
+
+    .padding-info {
+        padding-top: 2%;
+        padding-bottom: 2%;
+    }
+    .latest-lectures{
+        font-size: large;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .padding-info {
+        padding-top: 2%;
+        padding-bottom: 3%;
+    }
+
+    .enroll-overlay {
+        position: absolute;
+        top: 10%;
+        left: 15%;
+
+    }
+    .latest-lectures{
+        font-size: larger;
+    }
+}
+
+/* .card-body {
+    margin-right: 0;
+} */
+
+/* .footer-margin{
+    margin: 0 25%;
+} */
+
+.bi:hover{
+    color: black;
+}
+
+.bi-facebook{
+    color: #3B5998;
+}
+
+.bi-twitter{
+    color: #55ACEE;
+}
+
+.bi-instagram{
+    color: #cb2027;
+}
+
+.footer-menu > *{
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+
+li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.price-card-active{
+    border-width: 2px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.price-card:hover{
+    transform: scale(1.1);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    transition: 0.5s all ease-in-out;
+}
+
+.nav-css{
+    color: #6c757d;
+}
+
+.nav-link.nav-css.active{
+    font-weight: 700;
+    color: black;
+}
