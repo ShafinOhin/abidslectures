@@ -9,12 +9,12 @@
 
         <div class="row justify-content-around">
             <div class="col-8 col-lg-3 pb-4 text-lg-start footer-menu">
-                <div class="my-1"><a href="#" class="h5 link-secondary fw-light">Home</a></div>
-                <div class="my-1"><a href="#" class="h5 link-secondary fw-light">Explore</a></div>
-                <div class="my-1"><a href="#" class="h5 link-secondary fw-light">Pricing</a></div>
+                <div class="my-1"><a href="{% url 'home' %}" class="h5 link-secondary fw-light">Home</a></div>
+                <div class="my-1"><a href="{% url 'explore' %}" class="h5 link-secondary fw-light">Explore</a></div>
+                <div class="my-1"><a href="{% url 'pricing' %}" class="h5 link-secondary fw-light">Pricing</a></div>
                 <div class="my-1"><a href="#" class="h5 link-secondary fw-light">Blog</a></div>
-                <div class="my-1"><a href="#" class="h5 link-secondary fw-light">About</a></div>
-                <div class="my-1"><a href="#" class="h5 link-secondary fw-light">Profile</a></div>
+                <div class="my-1"><a href="{% url 'about' %}" class="h5 link-secondary fw-light">About</a></div>
+                <div class="my-1"><a href="{% url 'profile' %}" class="h5 link-secondary fw-light">Profile</a></div>
             </div>
             <div class="col-8 col-lg-3 pb-2">
                 <p class="h2">Follow me!</p>
