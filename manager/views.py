@@ -1,3 +1,4 @@
+# Just for git test
 from django.shortcuts import render, redirect
 
 from payment.models import Order, Transaction
