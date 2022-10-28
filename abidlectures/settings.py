@@ -28,7 +28,7 @@ SECRET_KEY = config('SECURITY_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default = True, cast = bool)
 
-ALLOWED_HOSTS = ['128.199.149.88', '127.0.0.1', 'www.abidstutorials.com', 'abidslectures.com']
+ALLOWED_HOSTS = ['128.199.149.88', '127.0.0.1', 'www.abidstutorials.com', 'abidstutorials.com']
 
 
 # Application definition
