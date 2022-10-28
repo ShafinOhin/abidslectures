@@ -51,7 +51,7 @@ def register(request):
             send_email.send()
 
             messages.success(request, 'Registraion Successful')
-            return redirect('accounts/register/?login=true&status=verification&email=' + email)
+            return redirect('register', login=True, status='verification', email=email)
     else:
         form = RegistrationForm()
 
@@ -101,6 +101,8 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
+        userProfile = UserProfile(user = user)
+        userProfile.save()
         messages.success(request, 'Congratulations! Your account is Activated')
         return redirect('login')
     else:
