@@ -30,6 +30,8 @@ DEBUG = config('DEBUG', default = True, cast = bool)
 
 ALLOWED_HOSTS = ['128.199.149.88', '127.0.0.1', 'www.abidstutorials.com', 'abidstutorials.com']
 
+DEVELOPMENT = config('DEVELOPMENT', cast = bool)
+
 
 # Application definition
 
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'manager',
 ]
 
-if not DEBUG:
+if DEVELOPMENT:
     INSTALLED_APPS += [
         'storages',
     ]
@@ -175,8 +177,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-DEVELOPMENT = config('DEVELOPMENT', cast = bool)
 
 if DEVELOPMENT:
     STATIC_URL = 'static/'
