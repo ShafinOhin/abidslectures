@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
 from course.models import Course, Subscription
+from payment.models import Order
 from .forms import RegistrationForm, UserForm, UserProfileForm, UserProfile
 from .models import Account
 from django.contrib import messages, auth
@@ -194,8 +195,23 @@ def profile(request):
         'user_profile': user_profile,
     }
 
-    enrolled_subscriptions = Subscription.objects.filter(user__id = user_profile.user.id)
-    context['enrolled_subscriptions'] = enrolled_subscriptions
+    courses = Course.objects.filter(released = True)
+
+    details = {}
+    for course in courses:
+        details[course.course_name] = {
+            'course_object': course,
+            'subscribed_units': [],
+        }
+        for unit in course.unit_set.filter(subscription__user = request.user, subscription__active = True):
+            details[course.course_name]['subscribed_units'].append(unit)
+    
+    context['details'] = details
+
+
+    payment_history = Order.objects.filter(user = request.user)
+
+    context['payments'] = payment_history
     
     return render(request, 'accounts/profile.html', context=context)
 

@@ -28,4 +28,6 @@ urlpatterns = [
     path('course/', include('course.urls')),
     path('about/', views.about, name = 'about'),
     path('dashboard/', include('dashboard.urls')),
+    path('payment/', include('payment.urls')),
+    path('manager/', include('manager.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

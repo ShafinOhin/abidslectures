@@ -1,7 +1,19 @@
 from django.shortcuts import render
 from .models import Course
+from django.http import JsonResponse
 
 # Create your views here.
+
+def get_detailed_pricing(request):
+    courses = Course.objects.filter(released = True)
+    details = {}
+    for course in courses:
+        details[course.course_name] = {}
+        details[course.course_name]['Entire Course'] = course.course_price
+        for unit in course.unit_set.all():
+            details[course.course_name][unit.unit_name] = unit.unit_price
+    return JsonResponse(details)
+
 
 def explore(request):
     courses = Course.objects.all()

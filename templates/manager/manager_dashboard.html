@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h3 style="text-align: center;" class="mt-5"> Unvalidated Transactions </h3>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">From</th>
+        <th scope="col">TransactionID</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Update</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for tran in unvalidated_trans %}
+        <form action="{% url 'approve_trans' %}" method="POST">
+            {% csrf_token %}
+            <tr>
+                <td>{{ tran.sender_number }}</td>
+                <td>{{ tran.trxID }}</td>
+                <td><input type="number" class = "form-control" name = "amount"> <input hidden name = "transid" value = "{{tran.id}}"></td>
+                <td><button type="submit" class="btn btn-warning">Update</button></td> 
+            </tr>
+        </form>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<h3 style="text-align: center;" class="mt-5"> Processing Orders </h3>
+
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">OrderID</th>
+        <th scope="col">Required Amount</th>
+        <th scope="col">Remaining Amount</th>
+        <th scope="col">Refresh</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for order in processing_orders %}
+        <form action="{% url 'refresh_order' %}" method="POST">
+            {% csrf_token %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.required_amount }}</td>
+                <td>{{ order.get_remaining_amount }} <input hidden name = "order_id" value = "{{order.id}}"></td>
+                <td><button type="submit" class="btn btn-warning">Update</button></td> 
+            </tr>
+        </form>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock content %}

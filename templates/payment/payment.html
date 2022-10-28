@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+    
+{% block content %}
+
+ <div class="mt-3 display-1 text-center mb-3 mb-lg-5">Payment</div>
+
+ <div class="mt-3 display-6 text-center mb-3 mb-lg-5">Select the Courses/Units you want to subscribe</div>
+
+ <div class="container mt-3 mb-4">
+    <form action = "{% url 'authorize' %}" method="POST">
+    {% csrf_token %}
+        {% for course, values in details.items %}
+
+            <h4>{{ course }}</h4>
+            <br>
+            <div class="form-check mb-2">
+                <input type="checkbox" name = "units[]" value = "_{{values.id}}" class="btn-check" id="course_{{values.id}}" data-price = "{{values.price}}" autocomplete="off" onclick="course_clicked('course_{{values.id}}')">
+                <label class="btn btn-outline-success" for="course_{{values.id}}">Full Course - {{values.price}}/=</label><br>
+            </div>
+            {% for unit in values.units %}
+            <div class="form-check form-check-inline mt-2">
+                <input type="checkbox" name = "units[]" value = "{{unit.id}}" class="btn-check course_{{values.id}}" id="unit_{{values.id}}_{{unit.id}}" data-price = "{{unit.unit_price}}" autocomplete="off" onclick="is_clicked()">
+                <label class="btn btn-outline-primary" for="unit_{{values.id}}_{{unit.id}}">{{unit.unit_name}} - {{unit.unit_price}}/=</label><br>
+            </div>
+            {% endfor %}
+
+
+            
+
+
+        {% endfor %}
+        <h4 style="text-align: center;" id = "amount_show" class="mt-5 mb-5"></h4>
+     <div class="row justify-content-around">
+         <!-- Steps -->
+         <div class="col-lg-7">
+             <div class="card mb-4 shadow">
+                 <div class="card-body">
+                     <div class="card-title display-4">Steps</div>
+                     <hr>
+                     <div class="pb-3"></div>
+                     <nav>
+                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                           <button class="nav-link nav-css py-3 active" id="nav-bkash-tab" data-bs-toggle="tab" data-bs-target="#nav-bkash" type="button" role="tab" aria-controls="nav-bkash" aria-selected="true">Bkash</button>
+                           <button class="nav-link nav-css py-3" id="nav-rocket-tab" data-bs-toggle="tab" data-bs-target="#nav-rocket" type="button" role="tab" aria-controls="nav-rocket" aria-selected="false">Rocket</button>
+                         </div>
+                     </nav>
+                     <div class="tab-content p-4" id="nav-tabContent">
+                         <div class="tab-pane fade show active" id="nav-bkash" role="tabpanel" aria-labelledby="nav-bkash-tab">
+                             <ol class="list-group list-group-numbered list-group-flush">
+                                 <li class="list-group-item py-3">Dial *247#</li>
+                                 <li class="list-group-item py-3">
+                                         Enter 1
+                                         <div class="text-muted text-center p-2 mt-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                             <div>
+                                                 Send Money
+                                             </div>
+                                         </div>
+                                 </li>
+                                 <li class="list-group-item py-3">
+                                     Enter number
+                                     <div class="text-muted justify-content-between px-3 mt-2 d-flex align-items-center px-0 py-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div class="p-0 m-0 align-self-center">{{ number.bkash_number }}</div>
+                                         <div class="self-align-center">
+                                             <button type="button" class="btn p-0 m-0 text-muted" style="font-size: small;">COPY</button>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li class="list-group-item py-3">
+                                     Enter Amount
+                                     <div class="text-muted text-center p-2 mt-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div id = "amount_bkash">
+                                             Amount (js)
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li class="list-group-item py-3">
+                                     Enter Reference
+                                     <div class="text-muted text-center p-2 mt-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div>
+                                             course-id (js)
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li class="list-group-item py-3">Enter Pin to pay</li>
+                                 <li class="list-group-item py-3">Enter the Bkash sender number and TrxId in Activation panel</li>
+                               </ol>
+                         </div>
+                         <div class="tab-pane fade" id="nav-rocket" role="tabpanel" aria-labelledby="nav-rocket-tab">
+                             <ol class="list-group list-group-numbered list-group-flush">
+                                 <li class="list-group-item py-3">Dial *322#</li>
+                                 <li class="list-group-item py-3">
+                                         Enter 2
+                                         <div class="text-muted text-center p-2 mt-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                             <div>
+                                                 Send Money
+                                             </div>
+                                         </div>
+                                 </li>
+                                 <li class="list-group-item py-3">
+                                     Enter number
+                                     <div class="text-muted justify-content-between px-3 mt-2 d-flex align-items-center px-0 py-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div class="p-0 m-0 align-self-center">{{ number.rocket_number }}</div>
+                                         <div class="self-align-center">
+                                             <button type="button" class="btn p-0 m-0 text-muted" style="font-size: small;">COPY</button>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <!-- <li class="list-group-item py-3">
+                                     Enter number
+                                     <div class="text-muted justify-content-around mt-2 d-flex align-items-center px-0 py-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div class="p-0 m-0"> 
+                                             +880 17 948 27077
+                                         </div>
+                                         <div>
+                                             <button type="button" class="btn p-0 m-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy">
+                                                 <i class="bi bi-clipboard2"></i> 
+                                             </button>
+                                         </div>
+                                     </div>
+                                 </li> -->
+                                 <li class="list-group-item py-3">
+                                     Enter Amount
+                                     <div class="text-muted text-center p-2 mt-2" style="background-color: #ecedef; border-radius: 0.75rem;">
+                                         <div id = "amount_rocket">
+                                             Amount (js)
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li class="list-group-item py-3">Enter Pin to pay</li>
+                                 <li class="list-group-item py-3">Enter the Rocket sender number and TrxId in Activation panel</li>
+                               </ol>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+         <!-- Activation -->
+         <div class="col-lg-5">
+             <div class="card shadow">
+                 <div class="card-body">
+                     <div class="card-title display-4">Activation</div>
+                     <hr>
+                     <div class="pb-3"></div>
+
+                     <div class="px-2">
+                         <div class="mb-3">
+                           <label for="sender-number" class="form-label">Sender's number</label>
+                           <input type="tel" class="form-control" id="sender_number" name = "sender_number" required>
+                         </div>
+                         <div class="mb-3">
+                           <label for="TrxID" class="form-label">Transaction ID</label>
+                           <input type="text" class="form-control" id="TrxID" name = "trxid" required>
+                         </div>
+                         <div class="mb-3">
+                            <label for="sender-number" class="form-label">Amount</label>
+                            <input disabled type="tel" class="form-control" id="amount" placeholder="0" name = "amount">
+                          </div>
+                         <div class="text-end pt-3 pb-2">
+                             <button type="submit" class="btn btn-success">Submit</button>
+                         </div>
+                        </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+    </form>
+ </div>
+
+ <script>
+
+    function course_clicked(course_id) {
+        course_checkbox = document.getElementById(course_id)
+        if(course_checkbox.checked) {
+            var markedCheckbox = document.querySelectorAll('input.' + course_id +':checked');
+            for(var checkbox of markedCheckbox) {
+                checkbox.checked = false;
+            }
+            course_checkbox.checked = true
+
+            for(var checkbox of document.querySelectorAll('input.' + course_id)) {
+                checkbox.disabled = true
+            }
+            course_checkbox.disabled = false
+        }
+        else {
+            for(var checkbox of document.querySelectorAll('input.' + course_id)) {
+                checkbox.disabled = false
+            }
+        }
+        is_clicked();
+    }
+
+    function is_clicked() {
+        document.getElementById("amount").placeholder = 0
+        var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+        total_amount = 0
+        for(var checkbox of markedCheckbox) {
+            total_amount = total_amount + parseInt(checkbox.dataset.price)   
+        }
+        document.getElementById("amount").placeholder = total_amount
+        document.getElementById("amount_bkash").innerHTML = total_amount
+        document.getElementById("amount_rocket").innerHTML = total_amount
+        document.getElementById("amount_show").innerHTML = "Total Amount: " + total_amount
+    }
+</script>
+
+{% endblock content %}
+
+
+
+

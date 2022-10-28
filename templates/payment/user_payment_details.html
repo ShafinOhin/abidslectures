@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section >
+    <div class="container mt-3">
+        {% include 'includes/alerts.html' %}
+        <div class="row g-0 g-lg-2">
+            
+                <!-- avatar card -->
+                <div class="col-lg-4">
+                    
+                    <!-- Payments -->
+                    <div class="card mb-4 shadow-sm">
+                        
+                        <div class="card-body">
+                            <a class="m-auto" href = "{% url 'profile' %}"><button class="btn btn-primary">Back to Profile</button></a>
+                            <div class="p-2">
+                                <h4 class="text-right">Payment History</h4>
+                            </div>
+                            
+                            <div class="card-body p-0">
+                                <h6></h6>
+                                <ul class="list-group list-group-flush rounded-3 mb-3">
+                                    {% for payment in payments %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-2">
+                                            <a href="#"># PaymentID: {{ payment.id }} | Status: {{ payment.display_status }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- infos -->
+                <div class="col-lg-8">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="p-3 pb-0">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="text-right">Payment Details</h4>
+                                </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels"><b>Payment ID: </b> </label> {{ payment.id }}</div>
+                                        <div class="col-md-6"><label class="labels"><b>Payment Date: </b></label> {{ payment.date_placed }}</div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels"><b>Required Amount: </b></label> {{ payment.required_amount }}</div>
+                                        <div class="col-md-6"><label class="labels"><b>Received Amount: </b></label> {{ payment.get_received_amount }}</div>
+                                    </div>
+                                    <div class="row mt-4 pt-2" style="background-color: rgb(255, 204, 163);">
+                                        <h6>Message:</h6>
+                                        <p>{{ payment.comment_for_user }}</p> 
+                                    </div>
+
+                      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %} 

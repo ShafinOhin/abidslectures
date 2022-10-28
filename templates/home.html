@@ -420,82 +420,13 @@
             <div class="row gx-0 justify-content-between">
                 <p class="card-text h4 col-6 col-lg-6 col-xl-6 col-xxl-6 padding-info intro-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <div class="col-5 col-sm-7 col-lg-8 col-xl-9 col-xxl-9" id="enroll-button">
-                    <a class="btn btn-primary" href="#">Explore</a>
+                    <a class="btn btn-primary" href="{% url 'explore' %}">Explore</a>
                 </div>
             </div>
         </div>
         
     </div>
 
-    <!-- latest titles -->
-    <div class="display-5 text-center my-4 pt-5 pb-lg-5 pb-3">Latest Lectures</div>
-    <!-- latest lectures -->
-    <div class="container">
-        <div class="row justify-content-center ">
-            <div class="col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush latest-lectures">
-                            <li class="list-group-item">
-                                <a href="#">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="align-self-center py-3">
-                                            <span id="course" class="pe-2">FCPS</span>/<span id="lecture-name" class="px-2">Topic name</span>/<span id="lecture-number" class="ps-2">lecture - 3</span>
-                                        </div>
-                                        <div class="text-end align-self-center">
-                                            <div class="badge bg-primary rounded-pill">new</div>
-                                            <div class="text-muted py-1 " style="font-size:x-small;">25 Jun 2002</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="align-self-center py-3">
-                                            <span id="course" class="pe-2">USLME</span>/<span id="lecture-name" class="px-2">Topic name</span>/<span id="lecture-number" class="ps-2">lecture - 7</span>
-                                        </div>
-                                        <div class="text-end align-self-center">
-                                            <div class="badge bg-primary rounded-pill ">new</div>
-                                            <div class="text-muted py-1 " style="font-size:x-small;">20 Jun 2002</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="align-self-center py-3">
-                                            <span id="course" class="pe-2">MBBS</span>/<span id="lecture-name" class="px-2">Topic name</span>/<span id="lecture-number" class="ps-2">lecture - 2</span>
-                                        </div>
-                                        <div class="text-end align-self-center">
-                                            <div class="text-muted  py-1" style="font-size:x-small;">10 Jun 2002</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-group-item ">
-                                <a href="#">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="align-self-center py-3">
-                                            <span id="course" class="pe-2">MRCP</span>/<span id="lecture-name" class="px-2">Topic name</span>/<span id="lecture-number" class="ps-2">lecture - 4</span>
-                                        </div>
-                                        <div class="text-end align-self-center">
-                                            <div class="text-muted py-1" style="font-size:x-small;">23 May 2002</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </div>
-                <div class="text-end p-2 fs-4">
-                    <a href="#">see all <i class="bi bi-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- categories title -->
     <div class="display-5 text-center my-4 pt-5 pb-lg-5 pb-3">Courses</div>
@@ -509,7 +440,7 @@
                     <div class="card-body">
                         <h5 class="card-title {% if course.released == False %} text-muted {% endif %}">{{ course.course_name }}</h5>
                         <p class="card-text {% if course.released == False %} text-muted {% endif %}">{{ course.description }}</p>
-                        <a href="#" class="btn btn-primary {% if course.released == False %} disabled {% endif %}">Explore</a>
+                        <a href="{% url 'explore' %}" class="btn btn-primary {% if course.released == False %} disabled {% endif %}">Explore</a>
                         {% if course.released == False %} <div class="col card-text text-end text-muted">coming soon...</div> {% endif %}
                     </div>
                 </div>
@@ -534,7 +465,7 @@
                         <li>{{ course.course_feature_2 }}</li>
                         <li>{{ course.course_feature_3 }}</li>
                     </ul>
-                    <a href="#" class="btn btn-outline-primary rounded-pill col-6 ">Enroll</a>
+                    <a href="{% url 'payment' %}" class="btn btn-outline-primary rounded-pill col-6 {% if course.released == False %} disabled {% endif %}" >{% if course.released == False %} Coming Soon {% else %}Enroll{% endif %}</a>
                 </div>
             </div>
             {% endfor %}

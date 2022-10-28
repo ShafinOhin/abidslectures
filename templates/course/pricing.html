@@ -22,12 +22,17 @@
            
            <div class="col-lg-6">
                <p class="fs-5">{{ course.description }}</p>
-               <ul class="list-unstyled fs-3">
-                    <li>{{ course.course_feature_1 }}</li>
-                    <li>{{ course.course_feature_2 }}</li>
-                    <li>{{ course.course_feature_3 }}</li>
+            
+               <ul class="list-unstyled fs-4">
+                {% for unit in course.unit_set.all %}
+                {% if unit.unit_price is 0 %}
+                    <li>{{ unit.unit_name }} - FREE </li>
+                {% else %}
+                    <li>{{ unit.unit_name }} - {{ unit.unit_price }} /=</li>
+                {% endif %}
+                {% endfor %}
                </ul>
-               <div class="pt-2"><a href="#" class="btn btn-lg btn-primary">Enroll Now</a></div>
+               <div class="pt-2"><a href="#" class="btn btn-lg btn-primary">Purchase Now</a></div>
            </div>
        </div>
        {% endfor %}
