@@ -93,9 +93,18 @@ def get_slugs_from_video_id(video_id):
         'course_slug' : course_slug,
     }
 
+def user_has_access_to_video(user, video):
+    try:
+        slugs = get_slugs_from_video_id(video.id)
+        unit = Unit.objects.get(slug = slugs['unit_slug'])
+        return user_has_access_unit(user, unit)
+    except:
+        return False
+
 @login_required
 def dashboard_video(request, *args, **kwargs):
     try:
+        user_profile = get_object_or_404(UserProfile, user=request.user)
         course_slug = kwargs['course_slug']
         course = Course.objects.get(slug = course_slug)
         unit_slug = kwargs['unit_slug']
@@ -104,29 +113,54 @@ def dashboard_video(request, *args, **kwargs):
         chapter = Chapter.objects.get(slug = chapter_slug)
         video_slug = kwargs['video_slug']
         video = Video.objects.get(id = video_slug)
-        likes_count = Like.objects.filter(video__id = video.id).count()
-        dislikes_count = Dislike.objects.filter(video__id = video.id).count()
-        is_watched_later = False
-        
-        if Watchlater.objects.filter(video__id = video.id, user = request.user).count() > 0:
-            is_watched_later = True
-        comments = Comment.objects.filter(video__id = video.id)
-                    
-        user_profile = get_object_or_404(UserProfile, user=request.user)
-                    
-        context = {
-            'course': course,
-            'unit': unit,
-            'chapter': chapter,
-            'video': video,
-            'likes_count': likes_count,
-            'dislikes_count': dislikes_count,
-            'is_watched_later': is_watched_later,
-            'comments': comments,
-            'user_profile': user_profile,
-            'dashboard_page': True,
-        }
-        
+
+        left_menu = {}
+        for _unit in course.unit_set.all():
+            left_menu[_unit.unit_name] = {
+                'unit': _unit,
+                'no_access': True,
+            }
+            if user_has_access_unit(request.user, _unit):
+                left_menu[_unit.unit_name]['no_access'] = False
+        print(left_menu)
+
+        if user_has_access_to_video(request.user, video):
+            likes_count = Like.objects.filter(video__id = video.id).count()
+            dislikes_count = Dislike.objects.filter(video__id = video.id).count()
+            is_watched_later = False
+            
+            if Watchlater.objects.filter(video__id = video.id, user = request.user).count() > 0:
+                is_watched_later = True
+            comments = Comment.objects.filter(video__id = video.id)
+                        
+            context = {
+                'course': course,
+                'unit': unit,
+                'chapter': chapter,
+                'video': video,
+                'likes_count': likes_count,
+                'dislikes_count': dislikes_count,
+                'is_watched_later': is_watched_later,
+                'comments': comments,
+                'user_profile': user_profile,
+                'dashboard_page': True,
+                'left_menu': left_menu,
+            }
+        else:
+            context = {
+                'course': course,
+                'unit': unit,
+                'chapter': chapter,
+                'video': video,
+                'likes_count': 0,
+                'dislikes_count': 0,
+                'is_watched_later': False,
+                'comments': None,
+                'user_profile': user_profile,
+                'dashboard_page': True,
+                'no_access': True,
+                'left_menu': left_menu,
+            }
         return render(request, 'dashboard/course.html', context)
 
     except:

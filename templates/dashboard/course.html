@@ -130,25 +130,34 @@
             <a href="#" class="h6 mt-2 ms-3" style="color: black;">Watch Laters <i class="ps-2 bi bi-clock"></i></a>
             <hr>
             <ul class="list-unstyled mb-0 pt-1 " id="tier-0">
-                {% for unit in course.unit_set.all %}
-                <li class="mb-1" id="tier-0-{{unit.id}}">
-                    <div class="d-inline-flex align-items-center rounded collapse ps-2 mouse-hand" data-bs-toggle="collapse" data-bs-target="#tier-0-1-{{unit.id}}" aria-expanded="true">
+                {% for unit_name, unit_obj in left_menu.items %}
+                <li class="mb-1" id="tier-0-{{unit_obj.unit.id}}">
+                    <div class="d-inline-flex align-items-center rounded collapse ps-2 mouse-hand" style="width: 100%;" data-bs-toggle="collapse" data-bs-target="#tier-0-1-{{unit_obj.unit.id}}" aria-expanded="true">
                         <i class="bi bi-caret-right"></i>
-                        <p class="fs-5 mb-0">{{ unit.unit_name }}</p>
+                        <p class="fs-5 mb-0 {% if unit_obj.no_access %} text-secondary {% endif %} p-auto"> {{ unit_obj.unit.unit_name }} {% if unit_obj.no_access %}  <i class="bi bi-file-lock"></i> {% endif %} </p>
                     </div>
-                    <ul class="collapse list-unstyled fw-normal pb-1 ps-3 normal" id="tier-0-1-{{unit.id}}">
-                        {% for chapter in unit.chapter_set.all %}
+                    <ul class="collapse list-unstyled fw-normal pb-1 ps-3 normal" id="tier-0-1-{{unit_obj.unit.id}}">
+                        {% for chapter in unit_obj.unit.chapter_set.all %}
                         <li class="mb-1">
-                            <div class="d-inline-flex align-items-center rounded collapse mouse-hand" data-bs-toggle="collapse" data-bs-target="#tier-0-1-{{unit.id}}-{{chapter.id}}" aria-expanded="false">
-                                <i class="bi bi-caret-right"></i>
-                                {{ chapter.chapter_name }}
+                            <div style="width: 100%;" class="d-inline-flex align-items-center rounded collapse mouse-hand {% if unit_obj.no_access %} text-secondary {% endif %}" data-bs-toggle="collapse" data-bs-target="#tier-0-1-{{unit_obj.unit.id}}-{{chapter.id}}" aria-expanded="false">
+                                <i class="bi bi-caret-right "></i>
+                                {{ chapter.chapter_name }} {% if unit_obj.no_access %}  <i class="bi bi-file-lock"></i> {% endif %}
                             </div>
-                            <ul class="collapse list-unstyled pb-1 ps-5 small" id="tier-0-1-{{unit.id}}-{{chapter.id}}">
+                            <ul class="collapse list-unstyled pb-1 ps-5 small" id="tier-0-1-{{unit_obj.unit.id}}-{{chapter.id}}">
                                 {% for video in chapter.video_set.all %}
-                                <li class="mb-1 p-1" id = "tier-0-1-{{unit.id}}-{{chapter.id}}-{{video.id}}">
-                                    <a href="{% url 'dashboard' course_slug=course.slug chapter_slug=chapter.slug unit_slug=unit.slug video_slug=video.id %}" class="d-inline-flex align-items-center rounded mouse-hand" style="color: black;"><i class="bi bi-play-btn pe-2"></i> {{ video.video_name }}</a>
+                                <li class="mb-1 p-1 mt-1" id = "tier-0-1-{{unit_obj.unit.id}}-{{chapter.id}}-{{video.id}}">
+                                    <a href="{% url 'dashboard' course_slug=course.slug chapter_slug=chapter.slug unit_slug=unit_obj.unit.slug video_slug=video.id %}" class="d-inline-flex align-items-center rounded mouse-hand {% if unit_obj.no_access %} text-secondary {% endif %}" style="color: black;"><i class="bi bi-play-btn pe-2"></i> {{ video.video_name }} {% if unit_obj.no_access %}  <i class="bi bi-file-lock"></i> {% endif %} </a>
                                 </li>
                                 {% endfor %}
+                                {% if chapter.lecture_note %}
+                                <li>
+                                    <div class="mt-2 mb-2 p-1 border border-secondary bg-info bg-opacity-10 d-flex justify-content-between align-items-center">
+                                        
+                                            <a  href="{% if unit_obj.no_access %} # {% else %} {{ chapter.lecture_note.url }} {% endif %}" class="btn btn-sm border-success text-success">Notes [PDF] {% if unit_obj.no_access %} <i class="bi bi-file-lock"></i> {% endif %}</a>
+
+                                    </div>
+                                </li>
+                                {% endif %}
                             </ul>
                         </li>
                         {% endfor %}
@@ -166,9 +175,32 @@
                     <!-- embed -->
                     <div class="ratio ratio-16x9">
                         <div class="ratio ratio-16x9">
-                            <iframe width="853" height="480" src="{{ video.video_url }}" title="{{ video.video_name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {% if no_access %}
+                            <h4 style="margin-top: 20px; text-align: center;"> Sorry, you don't have access to this video. Please purchase subscription </h4>
+                            {% else %}
+                            
+                           <video
+                                oncontextmenu="return false;"
+                                id="my-video"
+                                class="video-js"
+                                controls
+                                preload="auto"
+                                width="853"
+                                height="480"
+                                poster="#"
+                                data-setup="{}">
+
+                                <source src="{{ video.video_file.url }}" type="video/mp4" />
+                                
+                            </video>
+
+                           {% endif %}
                         </div>
                     </div>
+                    {% if no_access %}
+
+
+                    {% else %}
                     <!-- video title -->
                     <div class="h1 mt-4 mb-3">1. {{ video.video_name }}</div>
                     <!-- like disklikes -->
@@ -356,17 +388,20 @@
                         </div>
 
                     </div>
-                    
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+
     
     <script>
         document.getElementById("tier-0-1-{{unit.id}}").classList.add('show')
         document.getElementById("tier-0-1-{{unit.id}}-{{chapter.id}}").classList.add('show')
-        document.getElementById("tier-0-1-{{unit.id}}-{{chapter.id}}-{{video.id}}").classList.add("bg-secondary")
+        document.getElementById("tier-0-1-{{unit.id}}-{{chapter.id}}-{{video.id}}").style.backgroundColor = "#D0E7FF"
 
     </script>
+
+<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
 
 {% endblock content %}

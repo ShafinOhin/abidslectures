@@ -33,7 +33,7 @@
                                     <ul class="list-group list-group-flush rounded-3 mb-3">
                                         {% for unit in values.subscribed_units %}
                                             <li class="list-group-item d-flex justify-content-between align-items-center p-2">
-                                                <a href="#">{{ unit.unit_name }}</a>
+                                                <a href="{% url 'dashboard' values.course_object.slug unit.slug %}">{{ unit.unit_name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>

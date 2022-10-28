@@ -7,6 +7,14 @@ from payment.models import Order
 
 # Create your models here.
 
+import uuid
+import os
+
+def get_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('video/', filename)
+
 class Course(models.Model):
     course_name = models.CharField(max_length = 100)
     slug = models.SlugField(max_length = 100, unique = True)
@@ -77,11 +85,15 @@ class Video(models.Model):
     video_name = models.CharField(max_length = 150)
     slug = models.SlugField(max_length = 150)
     video_description = models.TextField(max_length = 500, blank = True, null = True)
-    video_url = models.CharField(max_length = 150)
+    video_url = models.CharField(max_length = 150, blank = True, null = True)
+    video_file = models.FileField(upload_to = get_file_path, blank = True, null = True)
     video_duration = models.IntegerField(default = 0, blank = True, null = True)
     date_updated = models.DateTimeField(auto_now= True)
 
     chapter = models.ForeignKey(Chapter, on_delete = models.SET_NULL, blank = True, null = True)
+
+    def __str__(self):
+        return self.video_name
 
 
 class Subscription(models.Model):
