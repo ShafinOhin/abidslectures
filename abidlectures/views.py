@@ -10,8 +10,13 @@ def home(request):
 
 
 def about(request):
-    about = About.objects.all()[0]
-    context = {
-        'about' : about,
-    }
+    about = About.objects.all()
+    if about.count() > 0:
+        context = {
+            'about' : about[0],
+        }
+    else:
+        context = {
+            'about': None,
+        }
     return render(request, 'about.html', context)
