@@ -23,7 +23,7 @@ from . import views
 
 urlpatterns = [
     # path('admin/', include('admin_honeypot.urls', namespace = 'admin_honeypot')),
-    path('securedLogin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', views.home, name = 'home'),
     path('accounts/', include('accounts.urls')),
     path('course/', include('course.urls')),
