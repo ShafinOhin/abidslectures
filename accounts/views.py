@@ -75,7 +75,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            messages.success(request, 'Welcome, ' + 'USERNAME')
+            messages.success(request, 'Welcome, ' + user.username)
             return redirect('profile')
         
         else:
