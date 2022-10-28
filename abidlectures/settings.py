@@ -95,7 +95,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'atDB',
+            'NAME': 'atdb',
             'USER': 'at_admin',
             'PASSWORD': config('DB_PASSWORD'),
             'HOST': 'localhost',
