@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'manager',
 ]
 
-if DEVELOPMENT:
+if not DEVELOPMENT:
     INSTALLED_APPS += [
         'storages',
     ]
