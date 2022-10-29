@@ -74,7 +74,7 @@ class Account(AbstractBaseUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key = True)
     profile_picture = models.ImageField(blank=True, null = True, upload_to='user_profile/')
 
     def __str__(self):
