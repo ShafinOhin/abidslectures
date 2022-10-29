@@ -192,6 +192,7 @@ else:
         'CacheControl': 'max-age=86400',
     }
     AWS_LOCATION = config('AWS_LOCATION')
+    AWS_DEFAULT_ACL = 'public-read'
 
 
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
