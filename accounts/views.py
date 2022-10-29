@@ -51,7 +51,10 @@ def register(request):
             send_email.send()
 
             messages.success(request, 'Registraion Successful')
-            return redirect('register', login=True, status='verification', email=email)
+            base_url = reverse('register')  
+            query_string =  urlencode({'login': True, 'status': 'verification', 'email': email})
+            url = '{}?{}'.format(base_url, query_string)
+            return redirect(url)
     else:
         form = RegistrationForm()
 
@@ -243,6 +246,8 @@ def changepassword(request):
 
     return render(request, 'accounts/changepassword.html')
 
+from django.urls import reverse
+from urllib.parse import urlencode
 
 def bug_solver(request):
-    return redirect('register', login=True, status='verification', email='shafin@ohin.com')
+    return render(request, 'accounts/bug_solver.html')
