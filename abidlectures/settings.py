@@ -199,5 +199,5 @@ else:
     AWS_S3_ENDPOINT_URL = f'https://{AWS_S3_REGION_NAME}.digitaloceanspaces.com'
 
     STATIC_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATICFILES_STORAGE = 'custom_storages.s3_priv_storage'
-    DEFAULT_FILE_STORAGE = 'custom_storages.s3_priv_storage'
+    STATICFILES_STORAGE = 'custom_storages.PrivStorage'
+    DEFAULT_FILE_STORAGE = 'custom_storages.PrivStorage'
