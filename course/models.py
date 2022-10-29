@@ -63,7 +63,7 @@ class Unit(models.Model):
     unit_name = models.CharField(max_length = 100)
     slug = models.SlugField(max_length = 100)
     unit_price = models.IntegerField(default = 0)
-    course = models.ForeignKey(Course, on_delete = models.SET_NULL, blank = True, null = True)
+    course = models.ForeignKey(Course, on_delete = models.CASCADE, blank = True, null = True)
 
     def __str__(self): 
         return self.course.course_name + ' - ' + self.unit_name
@@ -73,7 +73,7 @@ class Chapter(models.Model):
     chapter_name = models.CharField(max_length = 100)
     slug = models.SlugField(max_length = 100)
 
-    unit = models.ForeignKey(Unit, on_delete = models.SET_NULL, blank = True, null = True)
+    unit = models.ForeignKey(Unit, on_delete = models.CASCADE, blank = True, null = True)
 
     lecture_note = models.FileField(upload_to = 'notes/', blank = True, null = True)
 
@@ -90,7 +90,7 @@ class Video(models.Model):
     video_duration = models.IntegerField(default = 0, blank = True, null = True)
     date_updated = models.DateTimeField(auto_now= True)
 
-    chapter = models.ForeignKey(Chapter, on_delete = models.SET_NULL, blank = True, null = True)
+    chapter = models.ForeignKey(Chapter, on_delete = models.CASCADE, blank = True, null = True)
 
     def __str__(self):
         return self.video_name
