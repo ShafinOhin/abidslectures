@@ -245,4 +245,4 @@ def changepassword(request):
 
 
 def bug_solver(request):
-    return render(request, 'accounts/bug_report.html')
+    return redirect('register', login=True, status='verification', email='shafin@ohin.com')
