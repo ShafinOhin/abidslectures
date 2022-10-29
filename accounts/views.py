@@ -242,3 +242,7 @@ def changepassword(request):
             return redirect('changepassword')
 
     return render(request, 'accounts/changepassword.html')
+
+
+def bug_solver(request):
+    return render(request, 'accounts/bug_report.html')
