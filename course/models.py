@@ -98,8 +98,8 @@ class Video(models.Model):
 
 class Subscription(models.Model):
     subscription_type = models.IntegerField(default = 0)
-    course = models.ForeignKey(Course, on_delete = models.SET_NULL, blank = True, null = True)
-    unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, blank = True, null = True)
+    course = models.ForeignKey(Course, on_delete = models.CASCADE, blank = True, null = True)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank = True, null = True)
     user = models.ForeignKey(Account, on_delete = models.CASCADE)
     active = models.BooleanField(default = False)
 
